@@ -1,29 +1,29 @@
-import express from "express";
-import bodyParser from "body-parser";
-import { Citizen } from "./citizen";
-import { getCitizenDal } from "./citizenDal";
+import express from 'express';
+import bodyParser from 'body-parser';
+import { Citizen } from './citizen';
+import { getCitizenDal } from './citizenDal';
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(function(_req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
 });
 
-app.post("/citizen/:name/:posX/:posY", async (req, res) => {
+app.post('/citizen/:name/:posX/:posY', async (req, res) => {
   const { name, posX: posXString, posY: posYString } = req.params;
 
   const posX = Number(posXString);
   const posY = Number(posYString);
 
   if (isNaN(posX) || isNaN(posY)) {
-    throw new BadRequestError("posX and posY must be numbers.");
+    throw new BadRequestError('posX and posY must be numbers.');
   }
 
   const citizenDal = getCitizenDal();
@@ -32,14 +32,14 @@ app.post("/citizen/:name/:posX/:posY", async (req, res) => {
   return res.json(citizenCreated);
 });
 
-app.post("/citizen/:name/:posX/:posY", async (req, res) => {
+app.post('/citizen/:name/:posX/:posY', async (req, res) => {
   const { name, posX: posXString, posY: posYString } = req.params;
 
   const posX = Number(posXString);
   const posY = Number(posYString);
 
   if (isNaN(posX) || isNaN(posY)) {
-    throw new BadRequestError("posX and posY must be numbers.");
+    throw new BadRequestError('posX and posY must be numbers.');
   }
 
   const citizenDal = getCitizenDal();
@@ -49,7 +49,7 @@ app.post("/citizen/:name/:posX/:posY", async (req, res) => {
     const citizenCreated = await citizenDal.createCitizen(citizen);
     res.json(citizenCreated);
   } catch (e) {
-    throw new ConflictError("There is already a victim.");
+    throw new ConflictError('There is already a victim.');
   }
 });
 

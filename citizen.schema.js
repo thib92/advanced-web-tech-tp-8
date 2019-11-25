@@ -1,30 +1,30 @@
-import { EntitySchema } from "typeorm";
-import { Citizen } from "./citizen";
+import { EntitySchema } from 'typeorm';
+import { Citizen } from './citizen';
 
 export const citizenSchema = new EntitySchema({
-  tableName: "LondonCitizen",
-  name: "LondonCitizen",
+  tableName: 'LondonCitizen',
+  name: 'LondonCitizen',
   target: Citizen,
   columns: {
     id: {
       primary: true,
       generated: true,
-      type: "int",
+      type: 'int',
     },
     name: {
-      type: "varchar",
+      type: 'varchar',
       nullable: false,
     },
     posX: {
-      type: "int",
+      type: 'int',
       nullable: false,
     },
     posY: {
-      type: "int",
+      type: 'int',
       nullable: false,
     },
     isVictim: {
-      type: "bool",
+      type: 'bool',
       nullable: false,
     },
   },

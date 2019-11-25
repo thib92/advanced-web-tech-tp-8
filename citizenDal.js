@@ -1,5 +1,5 @@
-import { Citizen } from "./citizen";
-import { createConnection, Connection } from "typeorm";
+import { Citizen } from './citizen';
+import { createConnection, Connection } from 'typeorm';
 import { citizenSchema } from './citizen.schema';
 
 export class CitizenDal {
@@ -18,16 +18,16 @@ export class CitizenDal {
   async connect() {
     try {
       this.connection = await createConnection({
-        type: "mysql",
-        host: "0.0.0.0",
+        type: 'mysql',
+        host: '0.0.0.0',
         port: 3306,
-        username: "root",
-        password: "root",
-        database: "Db_London1888",
+        username: 'root',
+        password: 'root',
+        database: 'Db_London1888',
         entities: [citizenSchema],
       });
     } catch (err) {
-      console.error("Unable to connect");
+      console.error('Unable to connect');
       console.error(err);
     }
   }
@@ -51,7 +51,7 @@ export class CitizenDal {
         },
       });
       if (victim) {
-        throw new Error("There is already a victim in the database.");
+        throw new Error('There is already a victim in the database.');
       }
     }
 
