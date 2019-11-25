@@ -79,17 +79,20 @@ export class CitizenDal {
     // Another option would be to fetch all non-victim citizens and filter the array on the JS side
     // The only caveat with our implementation is that we still need to implement the distance function on the JS side
     // to handle the case where there are two citizens at equal distance to the victim.
-    const closestCitizens = await repository.createQueryBuilder('c')
-      .addSelect('SQRT(POW(c.posX - :vx, 2) + POW(c.posY - :vy, 2))', 'distance')
+    const closestCitizens = await repository
+      .createQueryBuilder('c')
+      .addSelect(
+        'SQRT(POW(c.posX - :vx, 2) + POW(c.posY - :vy, 2))',
+        'distance',
+      )
       .where('isVictim = false')
       .orderBy('distance', 'ASC')
       .setParameters({
-        'vx': victim.posX,
-        'vy': victim.posY,
+        vx: victim.posX,
+        vy: victim.posY,
       })
       .limit(2)
       .getMany();
-
 
     switch (closestCitizens.length) {
       case 0:
@@ -97,8 +100,13 @@ export class CitizenDal {
       case 1:
         return closestCitizens[0];
       default:
-        if (distanceToVictim(victim, closestCitizens[0]) === distanceToVictim(victim, closestCitizens[1])) {
-          throw new ConflictError('There are at least two citizens with the closest distance to the victime.');
+        if (
+          distanceToVictim(victim, closestCitizens[0]) ===
+          distanceToVictim(victim, closestCitizens[1])
+        ) {
+          throw new ConflictError(
+            'There are at least two citizens with the closest distance to the victime.',
+          );
         }
         return closestCitizens[0];
     }
