@@ -39,7 +39,6 @@ export class CitizenDal {
    */
   async createCitizen(citizen) {
     const connection = await this.getConnection();
-
     const repository = connection.getRepository(Citizen);
 
     // Throw an error if the citizen to create is a victim,
@@ -56,6 +55,13 @@ export class CitizenDal {
     }
 
     return repository.save(citizen);
+  }
+
+  async deleteAllCitizens() {
+    const connection = await this.getConnection();
+    const repository = connection.getRepository(Citizen);
+
+    await repository.clear();
   }
 }
 

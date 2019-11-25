@@ -32,7 +32,7 @@ app.post('/citizen/:name/:posX/:posY', async (req, res) => {
   return res.json(citizenCreated);
 });
 
-app.post('/citizen/:name/:posX/:posY', async (req, res) => {
+app.post('/victim/:name/:posX/:posY', async (req, res) => {
   const { name, posX: posXString, posY: posYString } = req.params;
 
   const posX = Number(posXString);
@@ -51,6 +51,12 @@ app.post('/citizen/:name/:posX/:posY', async (req, res) => {
   } catch (e) {
     throw new ConflictError('There is already a victim.');
   }
+});
+
+app.delete('/evidences', async (_, res) => {
+  const citizenDal = await getCitizenDal();
+  citizenDal.deleteAllCitizens();
+  return res.status(204).end();
 });
 
 export default app;
