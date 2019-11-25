@@ -2,8 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { Citizen } from './citizen';
 import { getCitizenDal } from './citizenDal';
+import { BadRequestError, ConflictError } from './errors';
 
 const app = express();
+
+// TODO: Error handling middleware
 
 app.use(bodyParser.json());
 app.use(function(_req, res, next) {
@@ -51,6 +54,12 @@ app.post('/victim/:name/:posX/:posY', async (req, res) => {
   } catch (e) {
     throw new ConflictError('There is already a victim.');
   }
+});
+
+app.get('/getJack', async (_, res) => {
+  const citizenDal = getCitizenDal();
+  const jack = await citizenDal.findJack();
+  return res.status(200).json(jack);
 });
 
 app.delete('/evidences', async (_, res) => {
