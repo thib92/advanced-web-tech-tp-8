@@ -54,8 +54,8 @@ app.post('/victim/:name/:posX/:posY', async (req, res) => {
 });
 
 app.delete('/evidences', async (_, res) => {
-  const citizenDal = await getCitizenDal();
-  citizenDal.deleteAllCitizens();
+  const citizenDal = getCitizenDal();
+  await citizenDal.deleteAllCitizens();
   return res.status(204).end();
 });
 
