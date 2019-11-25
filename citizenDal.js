@@ -1,5 +1,6 @@
 import { Citizen } from "./citizen";
 import { createConnection, Connection } from "typeorm";
+import { citizenSchema } from './citizen.schema';
 
 export class CitizenDal {
   /**
@@ -23,7 +24,7 @@ export class CitizenDal {
         username: "root",
         password: "root",
         database: "Db_London1888",
-        entities: []
+        entities: [citizenSchema],
       });
     } catch (err) {
       console.error("Unable to connect");
@@ -46,8 +47,8 @@ export class CitizenDal {
     if (citizen.isVictim) {
       const victim = await repository.findOne({
         where: {
-          isVictim: true
-        }
+          isVictim: true,
+        },
       });
       if (victim) {
         throw new Error("There is already a victim in the database.");
